@@ -49,48 +49,39 @@ class SInvaders:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
                     sys.exit()
-            self.snake.move()
-            self.snake_sprites.draw(self.screen)
+            self.Invaders.move()
+            self.Invaders_sprites.clear(self.screen,self.background)
+            self.Invaders_sprites.draw(self.screen)
             pygame.display.flip()
             """ elif event.type == KEYDOWN:
                invaderMap=invaderMap"""
                         
     def LoadSprites(self):
         """Load the sprites that we need"""
-        self.snake = Invader()
-        self.snake_sprites = pygame.sprite.RenderPlain((self.snake))
-        
-        """nNumHorizontal = int(self.width/64)
-        nNumVertical = int(self.height/64)       
-        self.pellet_sprites = pygame.sprite.Group()
-        for x in range(nNumHorizontal):
-            for y in range(nNumVertical):
-                self.pellet_sprites.add(Pellet(pygame.Rect(x*64, y*64, 64, 64)))  """       
+        self.Invaders = Invader()
+        self.Invaders_sprites = pygame.sprite.RenderPlain((self.Invaders))
+
  
 class Invader(pygame.sprite.Sprite):
-    """This is our snake that will move around the screen"""
-    xdirection =1
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) 
         self.image, self.rect = load_image('Invader_Row2.png',-1)
-        self.pellets = 0
-        """Set the number of Pixels to move each time"""
+        self.image.set_colorkey((255,255,255))
         self.x_dist = 5
         self.y_dist = 5 
+        self.xdirection =1
         
     def move(self):
-        """Move your self in one of the 4 directions according to key"""
-        """Key is the pyGame define for either up,down,left, or right key
-        we will adjust outselfs in that direction"""
-        xMove = 1;
+
+        xMove = 5;
         yMove = 0;
-        xdirection=1
-        if self.rect.right <=0:
-            xdirection=1
-        elif self.rect.right >= 950: 
-            xdirection=-1   
+        if self.rect.x <=0:
+            self.xdirection=1
+        elif self.rect.x >= 950: 
+            self.xdirection=-1   
         #self.rect = self.rect.move(xMove,yMove);
-        self.rect.move_ip(xMove*xdirection,yMove); 
+        self.rect.move_ip(xMove*self.xdirection,yMove); 
  
  
         
