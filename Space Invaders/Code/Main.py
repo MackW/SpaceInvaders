@@ -20,6 +20,7 @@ class SInvaders:
                  [1,1,1,1,1,1,1,1,1],
                  [2,2,2,2,2,2,2,2,2],
                  [2,2,2,2,2,2,2,2,2]]
+    currentFrame=0
 
     def __init__(self, width=1024,height=768):
         pygame.init()
@@ -44,37 +45,44 @@ class SInvaders:
             pygame.display.flip()
 
     def DemoMode(self):
+        clock=pygame.time.Clock()
         self.LoadSprites()
         while 1:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
                     sys.exit()
-            self.Invaders.move()
+            
             self.Invaders_sprites.clear(self.screen,self.background)
+            self.Invaders.move()
             self.Invaders_sprites.draw(self.screen)
             pygame.display.flip()
             """ elif event.type == KEYDOWN:
                invaderMap=invaderMap"""
+            clock.tick(10)
                         
     def LoadSprites(self):
         """Load the sprites that we need"""
         self.Invaders = Invader()
         self.Invaders_sprites = pygame.sprite.RenderPlain((self.Invaders))
-
+        self.Invaders = Invader()
+        self.Invaders_sprites = pygame.sprite.RenderPlain((self.Invaders))
  
 class Invader(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) 
-        self.image, self.rect = load_image('Invader_Row2.png',-1)
-        self.image.set_colorkey((255,255,255))
-        self.x_dist = 5
-        self.y_dist = 5 
-        self.xdirection =1
+        self.images=[]
+        self.images.append(load_image('Row3Open.png',-1))
+        self.images.append(load_image('Row3Closed.png',-1))
+        self.image = self.images[0]
+        self.rect=self.image.get_rect()
+        self.xdirection =0
+        self.currentFrame = 0
         
     def move(self):
-
-        xMove = 5;
+        self.currentFrame=0 if self.currentFrame==1 else 1
+        self.image = self.images[self.currentFrame]
+        xMove = 10;
         yMove = 0;
         if self.rect.x <=0:
             self.xdirection=1
